@@ -10,7 +10,12 @@
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
   </head>
   <body>
-    <%= yield %>
+    <div class="wrapper">
+      <h1><a href="/">rquest <small>for rdio</small></a></h1>
+      <%= yield %>
+
+      <footer>A “<em title="It *is* going to be a thing… someday.">monday night project</em>” by <a href="https://twitter.com/EtienneLem">@EtienneLem</a></footer>
+    </div>
 
     <script>document.write('<script src="//cdnjs.cloudflare.com/ajax/libs/' +
           ('__proto__' in {} && !/firefox\/3/i.test(navigator.userAgent) ?

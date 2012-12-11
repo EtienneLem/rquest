@@ -1,6 +1,11 @@
+@import "nib"
 @import "utils/reset"
 @import "utils/functions"
 @import "utils/mixins"
+
+// Variables -----------------------------------------------------------------
+$color = #4b5c66
+$rdioColor = #008fd5
 
 // Base ----------------------------------------------------------------------
 * { box-sizing: border-box }
@@ -10,23 +15,51 @@ html
   height: 100%
 
 body
-  font-size: 18
+  font-size: 32
 
 body, legend, input, textarea, button
   font-family: "open-sans", Helvetica Neue, Arial, sans-serif
   font-weight: 300
   line-height: 1.4
-  color: #000
+  color: $color
 
-a { color: hotpink }
-a:focus, a:hover { color: hotpink }
+a { color: $rdioColor; transition: color .2s ease-out; }
+a:focus, a:hover { color: darken($rdioColor, 10) }
 
 h1, h2, h3, h4 { font-family: "freight-sans-pro", Helvetica Neue, Arial, sans-serif }
+
+h1
+  color: $rdioColor
+  margin: 5% 0
+  small { font-size: 18 }
 
 // Layout --------------------------------------------------------------------
 .wrapper
   @extends .clear
   position: relative
-  width: 85%
+  width: 80%
   max-width: 1280px
   margin: auto
+
+section
+  margin: 10% 0
+
+// Form ----------------------------------------------------------------------
+input
+  $color = lighten($color, 40)
+
+  color: darken($color, 20)
+  border: none
+  border-bottom: 1px solid $color
+  margin: 0 .2em
+
+  &::-webkit-input-placeholder { color: $color }
+  &:-moz-placeholder { color: $color }
+  &:-ms-input-placeholder { color: $color }
+
+// Footer --------------------------------------------------------------------
+footer
+  font-weight: 400
+  font-size: 14
+  text-align: center
+  padding: 10% 0
