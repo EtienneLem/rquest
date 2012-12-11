@@ -106,6 +106,8 @@ class Rquest
 
     @songInput.on 'keydown', (e) =>
       return unless e.keyCode is KEYS.down
+      e.preventDefault()
+
       if ($li = @songList.find('li:first-child a')).length
         $li.focus()
 
@@ -117,6 +119,8 @@ class Rquest
 
     @songList.on 'keydown', 'a', (e) =>
       return if [KEYS.up, KEYS.down].indexOf(e.keyCode) is -1
+      e.preventDefault()
+
       $target = $(e.currentTarget)
       $parent = $target.parent('li')
 
