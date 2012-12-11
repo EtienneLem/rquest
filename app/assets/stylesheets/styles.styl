@@ -42,9 +42,6 @@ h1
   max-width: 1280px
   margin: auto
 
-section
-  margin: 10% 0
-
 // Songs ---------------------------------------------------------------------
 .songs { position: relative }
 
@@ -89,6 +86,8 @@ li + li
   border-top: 1px solid lighten($color, 60)
 
 // Form ----------------------------------------------------------------------
+form { margin: 10% 0 }
+
 input
   $color = lighten($color, 40)
 
@@ -103,7 +102,7 @@ input
 
 .actions { text-align: center }
 
-.button
+input[type="submit"]
   cursor: pointer
   display: inline-block
   color: #fff
