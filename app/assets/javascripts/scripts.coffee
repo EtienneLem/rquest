@@ -36,6 +36,8 @@ class Rquest
     @currentUsername = ''
     @usernameInput = $('input[name="username"]')
     @usernameKeyInput = $('input[name="username_key"]')
+    @userSpan = $('#user')
+    @avatarSpan = @userSpan.children('.avatar')
 
     @usernameInput.on 'blur', (e) =>
       username = @usernameInput.val().toLowerCase()
@@ -44,24 +46,35 @@ class Rquest
       @currentUsername = username
       @playlistsSelect.attr('disabled', true)
 
-      return if username is ''
+      if username is ''
+        @userSpan.removeClass('has-user')
+        @avatarSpan.html('')
+        return
+
       @html.addClass('loading')
 
       $.ajax
         url: "/#{username}/playlists"
         success: (data) =>
           @html.removeClass('loading')
+          @userSpan.removeClass('has-user')
+          @avatarSpan.html('')
           return unless data
 
           data = JSON.parse(data)
-
           @usernameKeyInput.val(data.user.key)
+
+          this.updateUser(data.user)
           this.updateGender(data.user.gender)
           this.updatePlaylists(data.playlists)
 
     @usernameInput.on 'keypress', (e) =>
       return unless e.keyCode is KEYS.enter
       @usernameInput.trigger('blur')
+
+  updateUser: (user) ->
+    @avatarSpan.html """<img src="#{user.icon}" alt="#{user.firstName}">"""
+    @userSpan.addClass('has-user')
 
   # Playlists management
   initPlaylists: ->
@@ -92,8 +105,8 @@ class Rquest
 
         return if song is @currentSong
         @currentSong = song
-        return if song is ''
 
+        return if song is ''
         @html.addClass('loading')
         @songRequest?.abort()
 
