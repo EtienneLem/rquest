@@ -17,6 +17,19 @@ module Rquest
       erb :index
     end
 
+    get '/:username/playlists' do
+      content_type :json
+      rdio = ::Rdio
+
+      user = rdio.search(query: params[:username], types: 'User')['results'][0]
+      playlists = rdio.playlists(user: user['key'])['owned']
+
+      {
+        user: user,
+        playlists: playlists
+      }.to_json
+    end
+
     not_found do
       erb :'404'
     end
