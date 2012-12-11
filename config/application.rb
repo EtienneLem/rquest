@@ -22,7 +22,7 @@ module Rquest
       rdio = ::Rdio
 
       user = rdio.search(query: params[:username], types: 'User')
-      return nil if user['number_results'] == 0
+      return nil if user['number_results'] != 1
 
       user = user['results'][0]
       playlists = rdio.playlists(user: user['key'])['owned']
