@@ -33,6 +33,15 @@ module Rquest
       }.to_json
     end
 
+    get '/search/*' do
+      content_type :json
+      rdio = ::Rdio
+
+      search = params[:splat][0].gsub('+', ' ')
+      songs = rdio.search(query: search, types: 'Track', count: 5)
+      songs.to_json
+    end
+
     not_found do
       erb :'404'
     end

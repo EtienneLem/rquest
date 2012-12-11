@@ -45,6 +45,49 @@ h1
 section
   margin: 10% 0
 
+// Songs ---------------------------------------------------------------------
+.songs { position: relative }
+
+ul
+  position: absolute
+  top: 100%; left: 0
+  width: 100%
+  margin: 4px 0 0
+  font-size: 0
+  list-style-type: none
+  box-shadow: 1px 1px 10px rgba(#000, .05)
+
+  a
+    padding: 6px
+    display: block
+    background-color: #fff
+    background-color: rgba(#fff, .95)
+
+  a:hover, a:focus
+    color: #fff
+    background-color: rgba($rdioColor, .95)
+
+  img { display: block }
+  div { display: inline-block; vertical-align: top }
+
+  .img { width: 20% }
+
+  .song
+    width: 80%
+    padding: 0 0 0 2%
+
+  span
+    display: block
+    text-overflow: ellipsis
+    overflow: hidden
+    white-space: nowrap
+
+  .name { font-size: 28 }
+  .artist { font-size: 18 }
+
+li + li
+  border-top: 1px solid lighten($color, 60)
+
 // Form ----------------------------------------------------------------------
 input
   $color = lighten($color, 40)
