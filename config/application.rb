@@ -21,10 +21,9 @@ module Rquest
       content_type :json
       rdio = ::Rdio
 
-      user = rdio.search(query: params[:username], types: 'User')
-      return nil if user['number_results'] != 1
+      user = rdio.user(vanityName: params[:username])
+      return nil unless user
 
-      user = user['results'][0]
       playlists = rdio.playlists(user: user['key'])['owned']
 
       {
