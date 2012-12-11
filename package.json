@@ -1,0 +1,12 @@
+{
+  "author": "Etienne Lemay <etienne@heliom.ca>",
+  "name": "Rquest",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/EtienneLem/rquest.git"
+  },
+  "dependencies": {
+    "nib": "0.9.0"
+  }
+}
