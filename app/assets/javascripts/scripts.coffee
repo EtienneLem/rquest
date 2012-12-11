@@ -35,6 +35,7 @@ class Rquest
   initUsername: ->
     @currentUsername = ''
     @usernameInput = $('input[name="username"]')
+    @usernameKeyInput = $('input[name="username_key"]')
 
     @usernameInput.on 'blur', (e) =>
       username = @usernameInput.val().toLowerCase()
@@ -54,6 +55,7 @@ class Rquest
 
           data = JSON.parse(data)
 
+          @usernameKeyInput.val(data.user.key)
           this.updateGender(data.user.gender)
           this.updatePlaylists(data.playlists)
 
@@ -79,6 +81,7 @@ class Rquest
     @currentSong = ''
     searchTimer = null
     @songRequest = null
+    @songKeyInput = $('input[name="song_key"]')
     @songInput = $('input[name="song"]')
     @songList = $('.songs ul')
 
@@ -113,8 +116,12 @@ class Rquest
 
     @songList.on 'click', 'a', (e) =>
       $target = $(e.currentTarget)
+
       song = $target.attr('data-name')
+      songKey = $target.attr('data-key')
+
       @songInput.val(song)
+      @songKeyInput.val(songKey)
       this.updateSongs()
 
     @songList.on 'keydown', 'a', (e) =>

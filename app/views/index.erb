@@ -1,13 +1,15 @@
 <form>
+  <input type="hidden" name="username_key" valye="0">
   Ask <input type="text" name="username" placeholder="username" value="">
   to add
   <span class="songs">
+    <input type="hidden" name="song_key" valye="0">
     <input type="text" placeholder="song" name="song" value="">
     <ul></ul>
   </span>
   to <span id="gender">his</span> <select name="playlists" disabled><option value="0">Select a playlist</option></select> playlist.
 
   <div class="actions">
-    <input type="submit" value="Pull rquest" onclick="alert('I have yet to find a way to notify the user :('); return false">
+    <input type="submit" value="Pull rquest">
   </div>
 </form>
