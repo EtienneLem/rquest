@@ -1,0 +1,32 @@
+@import "utils/reset"
+@import "utils/functions"
+@import "utils/mixins"
+
+// Base ----------------------------------------------------------------------
+* { box-sizing: border-box }
+
+html
+  font-size: 62.5%
+  height: 100%
+
+body
+  font-size: 18
+
+body, legend, input, textarea, button
+  font-family: Helvetica Neue, Arial, sans-serif
+  font-weight: 300
+  line-height: 1.4
+  color: #000
+
+a { color: hotpink }
+a:focus, a:hover { color: hotpink }
+
+h1, h2, h3, h4 { font-family: Helvetica Neue, Arial, sans-serif }
+
+// Layout --------------------------------------------------------------------
+.wrapper
+  @extends .clear
+  position: relative
+  width: 85%
+  max-width: 1280px
+  margin: auto
