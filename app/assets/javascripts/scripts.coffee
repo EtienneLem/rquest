@@ -8,6 +8,7 @@ class Rquest
     escape: 27
     up: 38
     down: 40
+    enter: 13
 
   constructor: ->
     @html = $('html')
@@ -55,6 +56,10 @@ class Rquest
 
           this.updateGender(data.user.gender)
           this.updatePlaylists(data.playlists)
+
+    @usernameInput.on 'keypress', (e) =>
+      return unless e.keyCode is KEYS.enter
+      @usernameInput.trigger('blur')
 
   # Playlists management
   initPlaylists: ->
