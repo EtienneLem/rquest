@@ -123,6 +123,54 @@ input[type="submit"]
     color: #fff
     background-color: darken($rdioColor, 10)
 
+// Create --------------------------------------------------------------------
+.create
+  text-align: center
+
+.note
+  font-size: 18
+
+#share-url
+  position: relative
+  transition: margin .15s ease-out
+
+  .link
+    display: block
+    color: #fff
+    background-color: $rdioColor
+    padding: .4em .6em
+    border-radius: 9px
+
+  .copy-to-clipboard
+    display: block
+    position: absolute
+    bottom: -60%; left: 50%
+    width: 136px
+    margin-left: -68px
+    color: #fff
+    font-weight: 400
+    font-size: 14
+    padding: .4em .6em
+    border-radius: 9px
+    background-color: $color
+    backface-visibility: hidden
+    transform: rotateX(180deg)
+    -webkit-transition-property: -webkit-transform
+    -moz-transition-property: -moz-transform
+    -ms-transition-property: -ms-transform
+    -o-transition-property: -o-transform
+    transition-property: transform
+    transition-duration: .2s
+    transition-timing-function: ease-out
+
+#share-url.hover
+  margin-bottom: 1.5em
+  .copy-to-clipboard { transform: rotateX(0deg) }
+
+#share-url.active .copy-to-clipboard
+  color: $rdioColor
+  background-color: #fff
+
 // Footer --------------------------------------------------------------------
 footer
   font-weight: 400

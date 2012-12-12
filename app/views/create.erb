@@ -1,0 +1,34 @@
+<%
+  share_url = "http://rquest.herokuapp.com/#{@user['key']}-#{@playlist['key']}-#{@song['key']}"
+  his_or_her = @user['gender'] == 'm' ? 'his' : 'her'
+  him_or_her = @user['gender'] == 'm' ? 'him' : 'her'
+%>
+
+<section class="create">
+  <p>
+    You want <a href="http://rdio.com<%= @user['url'] %>"><img src="<%= @user['icon'] %>" width="35"> <%= @user['firstName'] %></a>
+    to add <a href="<%= @song['shortUrl'] %>"><img src="<%= @song['icon'] %>" width="35"> <%= @song['name'] %> by <%= @song['artist'] %></a><br>
+    to <%= his_or_her %> <a href="<%= @playlist['shortUrl'] %>"><img src="<%= @playlist['icon'] %>" width="35"> <%= @playlist['name'] %></a> playlist.
+  </p>
+
+  <p>Share* this url with <%= him_or_her %>:</p>
+
+  <div id="share-url">
+    <span class="link"><%= share_url %></span>
+    <span class="copy-to-clipboard">Copy to Clipboard</span>
+  </div>
+
+  <p class="note">
+    * The Rdio API does not provide any contact information, so let me go ahead and try to guess <%= his_or_her %> Twitter username:
+    <a href="https://twitter.com/<%= @user['username'] %>">@<%= @user['username'] %></a><br>
+    If I guessed right, <a href="http://twitter.com/intent/tweet?text=<%= URI.escape("Hey @#{@user['username']}, I have a #rquest for your \"#{@playlist['name']}\" @rdio playlist") %>&amp;url=<%= share_url %>">Tweet <%= him_or_her %> your rquest</a>.
+  </p>
+
+  <script src="/js/vendor/zeroclipboard.min.js"></script>
+  <script>ZeroClipboard.setMoviePath('/swf/zeroclipboard10.swf')</script>
+  <script>
+    var clip = new ZeroClipboard.Client()
+    clip.setText('<%= share_url %>')
+    clip.glue('share-url')
+  </script>
+</section>

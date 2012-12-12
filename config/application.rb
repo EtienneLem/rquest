@@ -17,6 +17,14 @@ module Rquest
       erb :index
     end
 
+    post '/create' do
+      @user = JSON.parse(params[:user])
+      @song = JSON.parse(params[:song])
+      @playlist = JSON.parse(params[:playlists])
+
+      erb :create
+    end
+
     get '/:username/playlists' do
       content_type :json
       rdio = ::Rdio
