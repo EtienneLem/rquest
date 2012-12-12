@@ -1,4 +1,9 @@
 <section class="request">
+  <% if !logged_in? || current_user[:id] != @user['key']  %>
+    <div id="please-log-in">
+      <p>Only <a href="http://rdio.com<%= @user['url'] %>"><img src="<%= @user['icon'] %>" width="35"> <%= @user['firstName'] %></a> can accept this playlist rquest.</p>
+    </div>
+  <% end %>
   <p>Hello <a href="http://rdio.com<%= @user['url'] %>"><img src="<%= @user['icon'] %>" width="35"> <%= @user['firstName'] %></a></p>
   <p>
     <% if @requester %>
