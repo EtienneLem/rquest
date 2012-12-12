@@ -30,6 +30,7 @@ def log_user_in(auth_hash)
     username: auth_hash['info']['nickname'],
     avatar: auth_hash['info']['image'],
     token: auth_hash['credentials']['token'],
+    token_secret: auth_hash['credentials']['secret'],
   }
 
   session[:user] = user
