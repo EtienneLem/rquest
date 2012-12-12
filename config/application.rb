@@ -1,5 +1,6 @@
 # encoding: utf-8
 require File.expand_path('../boot', __FILE__)
+require 'json'
 
 module Rquest
   class App < Sinatra::Base
@@ -57,15 +58,8 @@ module Rquest
       songs.to_json
     end
 
-    get %r{/(s\d+)-(p\d+)-(t\d+)(-(s\d+))?} do
-      legnth_to_slice = params[:captures][3] ? 1 : 2
-      params[:captures].slice!(3, legnth_to_slice)
-
-      user_key = params[:captures][0]
-      playlist_key = params[:captures][1]
-      song_key = params[:captures][2]
-      requester_key = params[:captures][3] ? params[:captures][3] : nil
-
+    get %r{/(s\d+)-(p\d+)-(t\d+)(-(s\d+))?$} do
+      user_key, playlist_key, song_key, requester_key = get_captures_variables
       request = ::Rdio.get(keys: params[:captures].join(','))
 
       @user = request[user_key]
@@ -74,6 +68,13 @@ module Rquest
       @requester = requester_key ? request[requester_key] : nil
 
       erb :request
+    end
+
+    get %r{/(s\d+)-(p\d+)-(t\d+)(-(s\d+))?/add} do
+      user_key, playlist_key, song_key = get_captures_variables
+      return not_found if !logged_in? || current_user[:id] != user_key
+
+      # TODO: Make an authenticated request to Rdio API
     end
 
     get '/auth/rdio/callback' do
@@ -92,6 +93,19 @@ module Rquest
 
     not_found do
       erb :'404'
+    end
+
+    private
+    def get_captures_variables
+      legnth_to_slice = params[:captures][3] ? 1 : 2
+      params[:captures].slice!(3, legnth_to_slice)
+
+      user_key = params[:captures][0]
+      playlist_key = params[:captures][1]
+      song_key = params[:captures][2]
+      requester_key = params[:captures][3] ? params[:captures][3] : nil
+
+      [user_key, playlist_key, song_key, requester_key]
     end
 
   end
