@@ -22,3 +22,23 @@ def view_class(view=nil, can_be_current=true)
   view ||= @view
   "page #{view.gsub('/', '_')}#{' current' if !request.xhr? && can_be_current}"
 end
+
+# Sessions helper
+def log_user_in(auth_hash)
+  user = {
+    id: auth_hash['uid'],
+    username: auth_hash['info']['nickname'],
+    avatar: auth_hash['info']['image'],
+    token: auth_hash['credentials']['token'],
+  }
+
+  session[:user] = user
+end
+
+def current_user
+  @current_user ||= session[:user] if session[:user]
+end
+
+def logged_in?
+  !!current_user
+end

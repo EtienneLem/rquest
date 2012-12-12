@@ -12,6 +12,7 @@ gem "erubis", "~> 2.7.0"
 # API wrappers
 gem 'httparty'
 gem 'simple_oauth'
+gem 'omniauth-rdio'
 
 # Assets
 gem "sprockets", "2.4.3"

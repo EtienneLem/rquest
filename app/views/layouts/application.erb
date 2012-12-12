@@ -11,7 +11,23 @@
   </head>
   <body>
     <div class="wrapper">
-      <h1><a href="/">rquest <small>for rdio</small></a></h1>
+      <header>
+        <h1><a href="/">rquest <small>for rdio</small></a></h1>
+        <nav>
+          <% if logged_in? %>
+            <div>
+              <img src="<%= current_user[:avatar] %>" width="38">
+              <div class="meta">
+                <%= current_user[:username] %>
+                <a href="/logout">Logout</a>
+              </div>
+            </div>
+          <% else %>
+            <a href="/auth/rdio" class="button">Connect with Rdio</a>
+          <% end %>
+        </nav>
+      </header>
+
       <%= yield %>
 
       <footer>

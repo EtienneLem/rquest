@@ -13,6 +13,10 @@ module Rquest
       register Sinatra::Reloader
     end
 
+    use OmniAuth::Builder do
+      provider :rdio, ENV['RDIO_KEY'], ENV['RDIO_SECRET']
+    end
+
     get '/' do
       erb :index
     end
@@ -61,6 +65,20 @@ module Rquest
       @song = request[song_key]
 
       erb :request
+    end
+
+    get '/auth/rdio/callback' do
+      log_user_in(request.env['omniauth.auth'])
+      redirect '/'
+    end
+
+    get '/auth/failure' do
+      redirect '/'
+    end
+
+    get '/logout' do
+      session.clear
+      redirect '/'
     end
 
     not_found do
