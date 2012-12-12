@@ -49,6 +49,20 @@ module Rquest
       songs.to_json
     end
 
+    get %r{/(s.+)-(p.+)-(t.+)} do
+      user_key = params[:captures][0]
+      playlist_key = params[:captures][1]
+      song_key = params[:captures][2]
+
+      request = ::Rdio.get(keys: params[:captures].join(','))
+
+      @user = request[user_key]
+      @playlist = request[playlist_key]
+      @song = request[song_key]
+
+      erb :request
+    end
+
     not_found do
       erb :'404'
     end
