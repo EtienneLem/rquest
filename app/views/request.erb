@@ -1,6 +1,12 @@
 <section class="request">
+  <p>Hello <a href="http://rdio.com<%= @user['url'] %>"><img src="<%= @user['icon'] %>" width="35"> <%= @user['firstName'] %></a></p>
   <p>
-    Annonymus wants you
+    <% if @requester %>
+      <a href="http://rdio.com<%= @requester['url'] %>"><img src="<%= @requester['icon'] %>" width="35"> <%= @requester['firstName'] %></a>
+    <% else %>
+      Someone
+    <% end %>
+    wants you
     to add <a href="<%= @song['shortUrl'] %>"><img src="<%= @song['icon'] %>" width="35"> <%= @song['name'] %> by <%= @song['artist'] %></a><br>
     to your <a href="<%= @playlist['shortUrl'] %>"><img src="<%= @playlist['icon'] %>" width="35"> <%= @playlist['name'] %></a> playlist.
   </p>

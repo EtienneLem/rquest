@@ -1,5 +1,6 @@
 <%
-  share_url = "http://rquest.herokuapp.com/#{@user['key']}-#{@playlist['key']}-#{@song['key']}"
+  current_user_id = logged_in? ? "-#{current_user[:id]}" : ''
+  share_url = "http://rquest.herokuapp.com/#{@user['key']}-#{@playlist['key']}-#{@song['key']}#{current_user_id}"
   his_or_her = @user['gender'] == 'm' ? 'his' : 'her'
   him_or_her = @user['gender'] == 'm' ? 'him' : 'her'
 %>

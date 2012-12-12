@@ -53,16 +53,21 @@ module Rquest
       songs.to_json
     end
 
-    get %r{/(s.+)-(p.+)-(t.+)} do
+    get %r{/(s\d+)-(p\d+)-(t\d+)(-(s\d+))?} do
+      legnth_to_slice = params[:captures][3] ? 1 : 2
+      params[:captures].slice!(3, legnth_to_slice)
+
       user_key = params[:captures][0]
       playlist_key = params[:captures][1]
       song_key = params[:captures][2]
+      requester_key = params[:captures][3] ? params[:captures][3] : nil
 
       request = ::Rdio.get(keys: params[:captures].join(','))
 
       @user = request[user_key]
       @playlist = request[playlist_key]
       @song = request[song_key]
+      @requester = requester_key ? request[requester_key] : nil
 
       erb :request
     end
