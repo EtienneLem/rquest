@@ -11,6 +11,7 @@ module Rdio
   end
 
   METHODS = {
+    get: 'get',
     user: 'findUser',
     search: 'search',
     playlists: 'getPlaylists',
