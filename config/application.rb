@@ -29,6 +29,10 @@ module Rquest
       erb :create
     end
 
+    get '/create' do
+      redirect '/'
+    end
+
     get '/:username/playlists' do
       content_type :json
       rdio = ::Rdio
@@ -74,7 +78,7 @@ module Rquest
 
     get '/auth/rdio/callback' do
       log_user_in(request.env['omniauth.auth'])
-      redirect '/'
+      redirect request.env['omniauth.origin'] || '/'
     end
 
     get '/auth/failure' do
