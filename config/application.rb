@@ -21,7 +21,7 @@ module Rquest
       content_type :json
       rdio = ::Rdio
 
-      user = rdio.user(vanityName: params[:username])
+      user = rdio.user(vanityName: params[:username], extras: 'username')
       return nil unless user
 
       playlists = rdio.playlists(user: user['key'])['owned']
