@@ -34,10 +34,10 @@ class Rquest
   # Username management
   initUsername: ->
     @currentUsername = ''
-    @usernameInput = $('input[name="username"]')
-    @usernameKeyInput = $('input[name="username_key"]')
+    @usernameInput = $('#username')
+    @userInput = $('input[name="user"]')
     @userSpan = $('#user')
-    @avatarSpan = @userSpan.children('.avatar')
+    @avatarSpan = @userSpan.children('.icon')
 
     @usernameInput.on 'blur', (e) =>
       username = @usernameInput.val().toLowerCase()
@@ -47,7 +47,7 @@ class Rquest
       @playlistsSelect.attr('disabled', true)
 
       if username is ''
-        @userSpan.removeClass('has-user')
+        @userSpan.removeClass('has-icon')
         @avatarSpan.html('')
         return
 
@@ -57,12 +57,12 @@ class Rquest
         url: "/#{username}/playlists"
         success: (data) =>
           @html.removeClass('loading')
-          @userSpan.removeClass('has-user')
+          @userSpan.removeClass('has-icon')
           @avatarSpan.html('')
           return unless data
 
           data = JSON.parse(data)
-          @usernameKeyInput.val(data.user.key)
+          @userInput.val(JSON.stringify(data.user))
 
           this.updateUser(data.user)
           this.updateGender(data.user.gender)
@@ -73,8 +73,8 @@ class Rquest
       @usernameInput.trigger('blur')
 
   updateUser: (user) ->
-    @avatarSpan.html """<img src="#{user.icon}" alt="#{user.firstName}">"""
-    @userSpan.addClass('has-user')
+    @avatarSpan.html "<img src='#{user.icon}' alt='#{user.firstName}'>"
+    @userSpan.addClass('has-icon')
 
   # Playlists management
   initPlaylists: ->
@@ -84,7 +84,7 @@ class Rquest
     playlistsHtml = ''
 
     for playlist in playlists
-      playlistsHtml += """<option value="#{playlist.key}">#{playlist.name}</option>"""
+      playlistsHtml += "<option value='#{JSON.stringify(playlist)}'>#{playlist.name}</option>"
 
     @playlistsSelect.removeAttr('disabled')
     @playlistsSelect.html(playlistsHtml)
@@ -94,14 +94,16 @@ class Rquest
     @currentSong = ''
     searchTimer = null
     @songRequest = null
-    @songKeyInput = $('input[name="song_key"]')
     @songInput = $('input[name="song"]')
-    @songList = $('.songs ul')
+    @songNameInput = $('#song-name')
+    @songSpan = $('#song')
+    @songList = @songSpan.children('ul')
+    @songIconSpan = @songSpan.children('.icon')
 
-    @songInput.on 'keyup', (e) =>
+    @songNameInput.on 'keyup', (e) =>
       clearTimeout(searchTimer)
       searchTimer = setTimeout =>
-        song = @songInput.val()
+        song = @songNameInput.val()
 
         return if song is @currentSong
         @currentSong = song
@@ -120,7 +122,7 @@ class Rquest
             this.updateSongs(data.results) if data.results.length > 0
       , 250
 
-    @songInput.on 'keydown', (e) =>
+    @songNameInput.on 'keydown', (e) =>
       return unless e.keyCode is KEYS.down
       e.preventDefault()
 
@@ -131,10 +133,14 @@ class Rquest
       $target = $(e.currentTarget)
 
       song = $target.attr('data-name')
-      songKey = $target.attr('data-key')
+      songData = $target.attr('data-song')
+      songIcon = $target.attr('data-icon')
 
-      @songInput.val(song)
-      @songKeyInput.val(songKey)
+      @songNameInput.val(song)
+      @songInput.val(songData)
+      @songIconSpan.html("<img src='#{songIcon}' alt='#{song}'>")
+      @songSpan.addClass('has-icon')
+
       this.updateSongs()
 
     @songList.on 'keydown', 'a', (e) =>
@@ -149,7 +155,7 @@ class Rquest
           if ($prevLi = $parent.prev('li')).length
             $prevLi.children('a').focus()
           else
-            @songInput.focus()
+            @songNameInput.focus()
         when KEYS.down
           $parent.next('li').children('a').focus()
 
@@ -164,7 +170,7 @@ class Rquest
     for song in songs
       songsHtml += """
         <li>
-          <a data-name="#{song.name}" data-artist="#{song.albumArtist}" data-key="#{song.key}" href="javascript:">
+          <a data-name="#{song.name}" data-song='#{JSON.stringify(song)}' data-icon="#{song.icon}" href="javascript:">
             <div class="img">
               <img src="#{song.icon}">
             </div>

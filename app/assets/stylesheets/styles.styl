@@ -42,19 +42,10 @@ h1
   max-width: 1280px
   margin: auto
 
-// User ----------------------------------------------------------------------
-#user { position: relative }
-#user.has-user input { text-indent: 1.5em }
-
-.avatar
-  position: absolute
-  top: 0; left: .3em
-  display: block
-  size: 42px
+form,
+section { margin: 10% 0 }
 
 // Songs ---------------------------------------------------------------------
-.songs { position: relative }
-
 ul
   position: absolute
   top: 100%; left: 0
@@ -96,7 +87,14 @@ li + li
   border-top: 1px solid lighten($color, 60)
 
 // Form ----------------------------------------------------------------------
-form { margin: 10% 0 }
+.input-group { position: relative }
+.has-icon input { text-indent: 1.5em }
+
+.icon
+  position: absolute
+  top: 0; left: .3em
+  display: block
+  size: 42px
 
 input
   $color = lighten($color, 40)

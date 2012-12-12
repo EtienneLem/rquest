@@ -1,17 +1,24 @@
-<form>
-  <input type="hidden" name="username_key" valye="0">
+<form action="/create" method="post">
   Ask
-  <span id="user">
-    <span class="avatar"></span>
-    <input type="text" name="username" placeholder="username" spellcheck="false" value="">
+  <span id="user" class="input-group">
+    <span class="icon"></span>
+    <input type="hidden" name="user" value="">
+    <input type="text" id="username" placeholder="username" spellcheck="false" value="">
   </span>
+
   to add
-  <span class="songs">
-    <input type="hidden" name="song_key" valye="0">
-    <input type="text" placeholder="song" name="song" spellcheck="false" value="">
+  <span id="song" class="input-group">
+    <span class="icon"></span>
+    <input type="hidden" name="song" value="">
+    <input type="text" id="song-name" placeholder="song" spellcheck="false" value="">
     <ul></ul>
   </span>
-  to <span id="gender">his</span> <select name="playlists" disabled><option value="0">Select a playlist</option></select> playlist.
+
+  to <span id="gender">his</span>
+  <select name="playlists" disabled>
+    <option value="0">Select a playlist</option>
+  </select>
+  playlist.
 
   <div class="actions">
     <input type="submit" value="Pull rquest">
