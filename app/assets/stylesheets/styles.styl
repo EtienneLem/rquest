@@ -45,6 +45,19 @@ h1
 form,
 section { margin: 10% 0 }
 
+section { text-align: center }
+
+.button
+  display: inline-block
+  color: #fff
+  padding: .4em .6em
+  border-radius: 9px
+  background: $rdioColor
+
+  &:hover, &:focus
+    color: #fff
+    background-color: darken($rdioColor, 10)
+
 // Songs ---------------------------------------------------------------------
 ul
   position: absolute
@@ -112,21 +125,9 @@ input
 
 input[type="submit"]
   cursor: pointer
-  display: inline-block
-  color: #fff
-  padding: .4em .6em
-  margin: 8% 0
-  border-radius: 9px
-  background: $rdioColor
-
-  &:hover, &:focus
-    color: #fff
-    background-color: darken($rdioColor, 10)
+  margin: 6% 0
 
 // Create --------------------------------------------------------------------
-.create
-  text-align: center
-
 .note
   font-size: 18
 
