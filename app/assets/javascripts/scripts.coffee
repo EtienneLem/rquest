@@ -84,7 +84,7 @@ class Rquest
     playlistsHtml = ''
 
     for playlist in playlists
-      playlistsHtml += "<option value='#{JSON.stringify(playlist)}'>#{playlist.name}</option>"
+      playlistsHtml += "<option value='#{JSON.stringify(playlist).replace(/'/g, '&rsquo;')}'>#{playlist.name}</option>"
 
     @playlistsSelect.removeAttr('disabled')
     @playlistsSelect.html(playlistsHtml)
@@ -170,7 +170,7 @@ class Rquest
     for song in songs
       songsHtml += """
         <li>
-          <a data-name="#{song.name}" data-song='#{JSON.stringify(song)}' data-icon="#{song.icon}" href="javascript:">
+          <a data-name="#{song.name}" data-song='#{JSON.stringify(song).replace(/'/g, '&rsquo;')}' data-icon="#{song.icon}" href="javascript:">
             <div class="img">
               <img src="#{song.icon}">
             </div>
