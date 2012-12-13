@@ -79,7 +79,7 @@ module Rquest
 
     get '/auth/rdio/callback' do
       log_user_in(request.env['omniauth.auth'])
-      redirect request.env['omniauth.origin'] || '/'
+      redirect request.env['omniauth.origin'].split('?')[0] || '/'
     end
 
     get '/auth/failure' do
