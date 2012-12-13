@@ -1,6 +1,17 @@
 <section class="request">
-  <% if !logged_in? || current_user[:id] != @user['key']  %>
-    <div id="please-log-in">
+  <% if defined? @error %>
+    <div class="overlay error">
+      <p><span>Error:</span> <%= @error %>.</p>
+    </div>
+  <% elsif @success %>
+    <div class="overlay success">
+      <p>
+        <span>Success:</span> <a href="<%= @song['shortUrl'] %>"><img src="<%= @song['icon'] %>" width="35"> <%= @song['name'] %> by <%= @song['artist'] %></a> has been added<br>
+        to your <a href="<%= @playlist['shortUrl'] %>"><img src="<%= @playlist['icon'] %>" width="35"> <%= @playlist['name'] %></a> playlist.
+      </p>
+    </div>
+  <% elsif !logged_in? || current_user[:id] != @user['key'] %>
+    <div class="overlay">
       <p>Only <a href="http://rdio.com<%= @user['url'] %>"><img src="<%= @user['icon'] %>" width="35"> <%= @user['firstName'] %></a> can accept this playlist rquest.</p>
     </div>
   <% end %>
@@ -16,5 +27,5 @@
     to your <a href="<%= @playlist['shortUrl'] %>"><img src="<%= @playlist['icon'] %>" width="35"> <%= @playlist['name'] %></a> playlist.
   </p>
 
-  <a class="button" href="javascript:">Accept</a>
+  <a class="button" href="<%= request.path_info %>/add">Accept</a>
 </section>

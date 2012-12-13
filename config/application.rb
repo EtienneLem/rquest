@@ -67,14 +67,37 @@ module Rquest
       @song = request[song_key]
       @requester = requester_key ? request[requester_key] : nil
 
+      if error = params[:error]
+        error = error.gsub('-', ' ')
+        @error = error.slice(0, 1).capitalize + error.slice(1..-1)
+      end
+
+      @success = params[:success]
+
       erb :request
     end
 
     get %r{/(s\d+)-(p\d+)-(t\d+)(-(s\d+))?/add} do
-      user_key, playlist_key, song_key = get_captures_variables
-      return not_found if !logged_in? || current_user[:id] != user_key
+      user_key, playlist_key, song_key, requester_key = get_captures_variables
 
-      # TODO: Make an authenticated request to Rdio API
+      requester = requester_key ? "-#{requester_key}" : ''
+      redirect_url = "#{user_key}-#{playlist_key}-#{song_key}#{requester}"
+
+      return redirect "#{redirect_url}?error=please-log-in" if !logged_in?
+      return redirect "#{redirect_url}?error=nice-try-#{current_user[:username]}" if current_user[:id] != user_key
+
+      playlists = ::Rdio.playlists(user: current_user[:id])['owned']
+      playlists.map! {|p| p['key'] }
+
+      return redirect "#{redirect_url}?error=not-your-playlist" if !playlists.include?(playlist_key)
+
+      request = ::Rdio.add_to_playlist(
+        { playlist: playlist_key, tracks: song_key },
+        { token: current_user[:token], token_secret: current_user[:token_secret] }
+      )
+
+      return redirect "#{redirect_url}?error=unknown-error-please-try-again" if !request
+      redirect "#{redirect_url}?success=true"
     end
 
     get '/auth/rdio/callback' do

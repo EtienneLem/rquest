@@ -15,6 +15,7 @@ module Rdio
     user: 'findUser',
     search: 'search',
     playlists: 'getPlaylists',
+    add_to_playlist: 'addToPlaylist',
   }
 
   METHODS.each do |wrapper_method, api_method|
