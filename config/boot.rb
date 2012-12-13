@@ -22,3 +22,9 @@ Dir[File.expand_path('../../lib/**/*.rb', __FILE__)].each do |file|
   file_basename = File.basename(file, File.extname(file))
   require "#{dirname}/#{file_basename}"
 end
+
+# New Relic
+if ENV['RACK_ENV'] == 'production'
+  # See http://support.newrelic.com/kb/troubleshooting/unicorn-no-data
+  ::NewRelic::Agent.after_fork(:force_reconnect => true) if defined? Unicorn
+end
